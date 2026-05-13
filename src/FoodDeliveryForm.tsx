@@ -26,8 +26,12 @@ export default function FoodDeliveryForm() {
       email: "",
       orderNo: new Date().valueOf(),
     },
+    mode: "onChange",
+    reValidateMode: "onChange",
+    criteriaMode: "firstError",
+    shouldFocusError: true,
+    delayError: 100,
   });
-  console.log(errors);
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = (formData) => {
     console.log(formData);
@@ -47,7 +51,7 @@ export default function FoodDeliveryForm() {
     >
       <RenderCount />
       <br />
-      <div className="grid grid-cols-2 grid-rows-2 gap-5 items-center">
+      <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
         <div className="flex flex-col bg-zinc-700/70 border px-2 py-1 border-gray-400 rounded-md">
           <label htmlFor="orderNo">orderNo</label>
           <input
@@ -60,20 +64,23 @@ export default function FoodDeliveryForm() {
             disabled
           />
         </div>
-        <div className="flex flex-col border px-2 py-1 border-gray-400 rounded-md">
+        <div className="flex relative flex-col  border px-2 py-1 border-gray-400 rounded-md">
           <label htmlFor="Mobile">Mobile</label>
           <input
             className="outline-0"
             {...register("mobile", {
               required: { value: true, message: "mobile is required" },
               minLength: { value: 11, message: "Must be 11 digits" },
-              maxLength: { value: 11, message: "Must be 11 digits" },
+              maxLength: { value: 11, message: "Must be 11 digits gav" },
             })}
             type="text"
             placeholder="Mobile"
           />
+          {errors?.mobile && (
+            <div className="error">{errors.mobile.message}</div>
+          )}
         </div>
-        <div className="flex flex-col border px-2 py-1 border-gray-400 rounded-md">
+        <div className="flex relative flex-col border px-2 py-1 border-gray-400 rounded-md">
           <label htmlFor="customerName">Customer Name</label>
           <input
             className="outline-0"
@@ -86,8 +93,12 @@ export default function FoodDeliveryForm() {
             type="text"
             id="customerName"
           />
+          {errors?.customerName && (
+            <div className="error">{errors.customerName.message}</div>
+          )}
         </div>
-        <div className="flex flex-col border px-2 py-1 border-gray-400 rounded-md">
+
+        <div className="flex relative flex-col border px-2 py-1 border-gray-400 rounded-md">
           <label htmlFor="Email">Email</label>
           <input
             className="outline-0"
@@ -104,10 +115,11 @@ export default function FoodDeliveryForm() {
             type="text"
             id="Email"
           />
+          {errors?.email && <div className="error">{errors.email.message}</div>}
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-8">
         <button
           type="submit"
           className="px-2 py-1 rounded-md border border-gray-400"
