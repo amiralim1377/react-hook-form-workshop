@@ -1,11 +1,14 @@
 import { useState, type ChangeEvent, type SubmitEvent } from "react";
+import { useRenderCount } from "./components/useRenderCount";
 
 type FoodDeliveryFormType = {
   mobile: string;
   customerName: string;
 };
+// eslint-disable-next-line
+const RenderCount = useRenderCount();
 
-export default function FoodDeliveryForm() {
+export default function TypicalForm() {
   const [values, setValues] = useState<FoodDeliveryFormType>({
     mobile: "",
     customerName: "",
@@ -28,6 +31,8 @@ export default function FoodDeliveryForm() {
       onSubmit={handleSubmit}
       className="border border-gray-400 rounded-md p-5  "
     >
+      <RenderCount />
+      <br />
       <div className="flex flex-col">
         <label htmlFor="customerName">customerName</label>
         <input
