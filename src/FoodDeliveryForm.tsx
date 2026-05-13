@@ -5,13 +5,32 @@ import {
 } from "react-hook-form";
 import { useRenderCount } from "./components/useRenderCount";
 import { TextField } from "./controls/TextField";
+import { Select } from "./controls/Select";
+import type { SelectOptionType } from "./types";
 
 type FoodDeliveryFormType = {
   orderNo: number;
   mobile: string;
   customerName: string;
   email: string;
+  paymentMethod: string;
+  deliveryIn: number;
 };
+
+const paymentOptions: SelectOptionType[] = [
+  { value: "", text: "Select" },
+  { value: "online", text: "Paid Online" },
+  { value: "cod", text: "Cash on Delivery" },
+];
+
+const deliveryInOptions: SelectOptionType[] = [
+  { value: 0, text: "Select" },
+  { value: 30, text: "Half an hour" },
+  { value: 60, text: "1 hour" },
+  { value: 120, text: "2 hours" },
+  { value: 180, text: "3 hours" },
+];
+
 // eslint-disable-next-line
 const RenderCount = useRenderCount();
 
@@ -26,12 +45,13 @@ export default function FoodDeliveryForm() {
       mobile: "",
       email: "",
       orderNo: new Date().valueOf(),
+      deliveryIn: 0,
+      paymentMethod: "",
     },
-    mode: "onBlur",
+    mode: "onChange",
     reValidateMode: "onChange",
     criteriaMode: "firstError",
     shouldFocusError: true,
-    delayError: 100,
   });
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = (formData) => {
@@ -97,6 +117,26 @@ export default function FoodDeliveryForm() {
           })}
           error={errors.email}
         />
+      </div>
+      <div>
+        <div className="mt-8">list of ordered food items</div>
+        <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
+          <Select
+            {...register("paymentMethod", {
+              required: "this field is required",
+            })}
+            label="payment Method"
+            error={errors.paymentMethod}
+            options={paymentOptions}
+          />
+
+          <Select
+            {...register("deliveryIn")}
+            label="Delivery within"
+            error={errors.deliveryIn}
+            options={deliveryInOptions}
+          />
+        </div>
       </div>
 
       <div className="mt-8">
