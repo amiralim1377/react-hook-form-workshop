@@ -3,3 +3,9 @@
 body {
   background-color: #242928;
 }
+
+@layer components {
+  .error {
+    @apply text-xs text-red-400 absolute -bottom-6 left-0;
+  }
+}
