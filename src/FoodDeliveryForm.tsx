@@ -1,5 +1,6 @@
 import {
   useForm,
+  useFormContext,
   type SubmitErrorHandler,
   type SubmitHandler,
 } from "react-hook-form";
@@ -15,6 +16,12 @@ type FoodDeliveryFormType = {
   email: string;
   paymentMethod: string;
   deliveryIn: number;
+  address: {
+    streetAddress: string;
+    landmark: string;
+    city: string;
+    state: string;
+  };
 };
 
 const paymentOptions: SelectOptionType[] = [
@@ -47,6 +54,12 @@ export default function FoodDeliveryForm() {
       orderNo: new Date().valueOf(),
       deliveryIn: 0,
       paymentMethod: "",
+      address: {
+        streetAddress: "",
+        landmark: "",
+        city: "",
+        state: "",
+      },
     },
     mode: "onChange",
     reValidateMode: "onChange",
@@ -72,7 +85,7 @@ export default function FoodDeliveryForm() {
     >
       <RenderCount />
       <br />
-      <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
+      <div className="grid grid-cols-2 grid-rows-2  gap-8 items-center">
         <TextField
           disabled
           type="text"
@@ -118,25 +131,59 @@ export default function FoodDeliveryForm() {
           error={errors.email}
         />
       </div>
-      <div>
-        <div className="mt-8">list of ordered food items</div>
-        <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
-          <Select
-            {...register("paymentMethod", {
-              required: "this field is required",
-            })}
-            label="payment Method"
-            error={errors.paymentMethod}
-            options={paymentOptions}
-          />
+      <div className="mt-8">list of ordered food items</div>
+      <h1 className="font-bold mt-4 capitalize">checkout Details</h1>
+      <div className="grid grid-cols-2  gap-y-2 gap-x-4 items-center">
+        <Select
+          {...register("paymentMethod", {
+            required: "this field is required",
+          })}
+          label="payment Method"
+          error={errors.paymentMethod}
+          options={paymentOptions}
+        />
 
-          <Select
-            {...register("deliveryIn")}
-            label="Delivery within"
-            error={errors.deliveryIn}
-            options={deliveryInOptions}
-          />
-        </div>
+        <Select
+          {...register("deliveryIn")}
+          label="Delivery within"
+          error={errors.deliveryIn}
+          options={deliveryInOptions}
+        />
+      </div>
+
+      <h1 className="font-bold mt-8  capitalize">delivery address</h1>
+      <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
+        <TextField
+          type="text"
+          className=""
+          label="Street Address"
+          {...register("address.streetAddress", {
+            required: "streetAddress is required",
+          })}
+          error={errors.address?.streetAddress}
+        />
+
+        <TextField
+          type="text"
+          className=""
+          label="city"
+          {...register("address.city", {
+            required: { value: true, message: "city is required" },
+          })}
+          error={errors.address?.city}
+        />
+        <TextField
+          type="text"
+          className=""
+          label="Landmark"
+          {...register("address.landmark")}
+        />
+        <TextField
+          type="text"
+          className=""
+          label="State"
+          {...register("address.state")}
+        />
       </div>
 
       <div className="mt-8">
