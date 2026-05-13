@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type SubmitEvent } from "react";
+import { useForm, type ErrorOption } from "react-hook-form";
 
 type FoodDeliveryFormType = {
   mobile: string;
@@ -6,49 +6,47 @@ type FoodDeliveryFormType = {
 };
 
 export default function FoodDeliveryForm() {
-  const [values, setValues] = useState<FoodDeliveryFormType>({
-    mobile: "",
-    customerName: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FoodDeliveryFormType>();
 
-  console.log(values);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-
-    setValues({ ...values, [name]: value });
+  const onSubmit = (formData: any) => {
+    console.log(formData);
   };
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(values);
+  // onerror
+
+  const onError = (errors: any) => {
+    console.log(errors);
   };
 
   return (
     <form
       autoComplete="false"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit, onError)}
       className="border border-gray-400 rounded-md p-5  "
     >
       <div className="flex flex-col">
         <label htmlFor="customerName">customerName</label>
         <input
-          value={values.customerName}
           className="border px-2 py-1 border-gray-400 rounded-md"
           id="customerName"
           type="text"
-          name="customerName"
-          onChange={handleChange}
+          {...register("customerName", {
+            required: "customer Name is required",
+          })}
         />
       </div>
       <div className="flex flex-col">
         <label htmlFor="mobile">mobile</label>
         <input
           id="mobile"
-          value={values.mobile}
-          name="mobile"
           className="border px-2 py-1 border-gray-400 rounded-md"
-          onChange={handleChange}
+          {...register("mobile", {
+            required: "mobile is required",
+          })}
         />
       </div>
       <div className="mt-4">
