@@ -3,11 +3,16 @@ import {
   type SubmitErrorHandler,
   type SubmitHandler,
 } from "react-hook-form";
+import { useRenderCount } from "./components/useRenderCount";
 
 type FoodDeliveryFormType = {
+  orderNo: number;
   mobile: string;
   customerName: string;
+  email: string;
 };
+// eslint-disable-next-line
+const RenderCount = useRenderCount();
 
 export default function FoodDeliveryForm() {
   const {
@@ -16,8 +21,8 @@ export default function FoodDeliveryForm() {
     formState: { errors },
   } = useForm<FoodDeliveryFormType>({
     defaultValues: {
-      customerName: "amirali",
-      mobile: "09120919987",
+      customerName: "",
+      mobile: "",
     },
   });
 
@@ -36,6 +41,8 @@ export default function FoodDeliveryForm() {
       onSubmit={handleSubmit(onSubmit, onError)}
       className="border border-gray-400 rounded-md p-5  "
     >
+      <RenderCount />
+      <br />
       <div className="flex flex-col">
         <label htmlFor="customerName">customerName</label>
         <input
@@ -45,6 +52,7 @@ export default function FoodDeliveryForm() {
           })}
           id="customerName"
           type="text"
+          placeholder="customerName"
         />
       </div>
       <div className="flex flex-col">
