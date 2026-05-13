@@ -23,14 +23,17 @@ export default function FoodDeliveryForm() {
     defaultValues: {
       customerName: "",
       mobile: "",
+      email: "",
+      orderNo: new Date().valueOf(),
     },
   });
+  console.log(errors);
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = (formData) => {
     console.log(formData);
   };
 
-  // onerror
+  // onerror-function
   const onError: SubmitErrorHandler<FoodDeliveryFormType> = (errors) => {
     console.log(errors);
   };
@@ -39,32 +42,71 @@ export default function FoodDeliveryForm() {
     <form
       autoComplete="false"
       onSubmit={handleSubmit(onSubmit, onError)}
-      className="border border-gray-400 rounded-md p-5  "
+      className="border border-gray-400 rounded-md p-5"
+      noValidate
     >
       <RenderCount />
       <br />
-      <div className="flex flex-col">
-        <label htmlFor="customerName">customerName</label>
-        <input
-          className="border px-2 py-1 border-gray-400 rounded-md"
-          {...register("customerName", {
-            required: "customer Name is required",
-          })}
-          id="customerName"
-          type="text"
-          placeholder="customerName"
-        />
+      <div className="grid grid-cols-2 grid-rows-2 gap-5 items-center">
+        <div className="flex flex-col bg-zinc-700/70 border px-2 py-1 border-gray-400 rounded-md">
+          <label htmlFor="orderNo">orderNo</label>
+          <input
+            className="outline-0 "
+            {...register("orderNo", {
+              required: "orderNo  is required",
+            })}
+            type="string"
+            id="orderNo"
+            disabled
+          />
+        </div>
+        <div className="flex flex-col border px-2 py-1 border-gray-400 rounded-md">
+          <label htmlFor="Mobile">Mobile</label>
+          <input
+            className="outline-0"
+            {...register("mobile", {
+              required: { value: true, message: "mobile is required" },
+              minLength: { value: 11, message: "Must be 11 digits" },
+              maxLength: { value: 11, message: "Must be 11 digits" },
+            })}
+            type="text"
+            placeholder="Mobile"
+          />
+        </div>
+        <div className="flex flex-col border px-2 py-1 border-gray-400 rounded-md">
+          <label htmlFor="customerName">Customer Name</label>
+          <input
+            className="outline-0"
+            {...register("customerName", {
+              required: {
+                value: true,
+                message: "customer Name is required",
+              },
+            })}
+            type="text"
+            id="customerName"
+          />
+        </div>
+        <div className="flex flex-col border px-2 py-1 border-gray-400 rounded-md">
+          <label htmlFor="Email">Email</label>
+          <input
+            className="outline-0"
+            {...register("email", {
+              required: {
+                value: true,
+                message: "email is required",
+              },
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Invalid email address",
+              },
+            })}
+            type="text"
+            id="Email"
+          />
+        </div>
       </div>
-      <div className="flex flex-col">
-        <label htmlFor="mobile">mobile</label>
-        <input
-          id="mobile"
-          className="border px-2 py-1 border-gray-400 rounded-md"
-          {...register("mobile", {
-            required: true,
-          })}
-        />
-      </div>
+
       <div className="mt-4">
         <button
           type="submit"
