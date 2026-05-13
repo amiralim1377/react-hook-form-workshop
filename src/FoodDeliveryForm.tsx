@@ -1,71 +1,46 @@
 import {
+  FormProvider,
   useForm,
-  useFormContext,
   type SubmitErrorHandler,
   type SubmitHandler,
+  type UseFormReturn,
 } from "react-hook-form";
 import { useRenderCount } from "./components/useRenderCount";
 import { TextField } from "./controls/TextField";
-import { Select } from "./controls/Select";
-import type { SelectOptionType } from "./types";
-
-type FoodDeliveryFormType = {
-  orderNo: number;
-  mobile: string;
-  customerName: string;
-  email: string;
-  paymentMethod: string;
-  deliveryIn: number;
-  address: {
-    streetAddress: string;
-    landmark: string;
-    city: string;
-    state: string;
-  };
-};
-
-const paymentOptions: SelectOptionType[] = [
-  { value: "", text: "Select" },
-  { value: "online", text: "Paid Online" },
-  { value: "cod", text: "Cash on Delivery" },
-];
-
-const deliveryInOptions: SelectOptionType[] = [
-  { value: 0, text: "Select" },
-  { value: 30, text: "Half an hour" },
-  { value: 60, text: "1 hour" },
-  { value: 120, text: "2 hours" },
-  { value: 180, text: "3 hours" },
-];
+import { CheckoutForm } from "./CheckoutForm";
+import type { FoodDeliveryFormType } from "./types";
 
 // eslint-disable-next-line
 const RenderCount = useRenderCount();
 
 export default function FoodDeliveryForm() {
+  const methods: UseFormReturn<FoodDeliveryFormType> =
+    useForm<FoodDeliveryFormType>({
+      defaultValues: {
+        customerName: "",
+        mobile: "",
+        email: "",
+        orderNo: new Date().valueOf(),
+        deliveryIn: 0,
+        paymentMethod: "",
+        address: {
+          streetAddress: "",
+          landmark: "",
+          city: "",
+          state: "",
+        },
+      },
+      mode: "onChange",
+      reValidateMode: "onChange",
+      criteriaMode: "firstError",
+      shouldFocusError: true,
+    });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FoodDeliveryFormType>({
-    defaultValues: {
-      customerName: "",
-      mobile: "",
-      email: "",
-      orderNo: new Date().valueOf(),
-      deliveryIn: 0,
-      paymentMethod: "",
-      address: {
-        streetAddress: "",
-        landmark: "",
-        city: "",
-        state: "",
-      },
-    },
-    mode: "onChange",
-    reValidateMode: "onChange",
-    criteriaMode: "firstError",
-    shouldFocusError: true,
-  });
+  } = methods;
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = (formData) => {
     console.log(formData);
@@ -78,7 +53,7 @@ export default function FoodDeliveryForm() {
 
   return (
     <form
-      autoComplete="false"
+      autoComplete="off"
       onSubmit={handleSubmit(onSubmit, onError)}
       className="border border-gray-400 rounded-md p-5"
       noValidate
@@ -133,23 +108,9 @@ export default function FoodDeliveryForm() {
       </div>
       <div className="mt-8">list of ordered food items</div>
       <h1 className="font-bold mt-4 capitalize">checkout Details</h1>
-      <div className="grid grid-cols-2  gap-y-2 gap-x-4 items-center">
-        <Select
-          {...register("paymentMethod", {
-            required: "this field is required",
-          })}
-          label="payment Method"
-          error={errors.paymentMethod}
-          options={paymentOptions}
-        />
-
-        <Select
-          {...register("deliveryIn")}
-          label="Delivery within"
-          error={errors.deliveryIn}
-          options={deliveryInOptions}
-        />
-      </div>
+      <FormProvider {...methods}>
+        <CheckoutForm />
+      </FormProvider>
 
       <h1 className="font-bold mt-8  capitalize">delivery address</h1>
       <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
