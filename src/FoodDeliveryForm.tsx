@@ -26,7 +26,7 @@ export default function FoodDeliveryForm() {
       email: "",
       orderNo: new Date().valueOf(),
     },
-    mode: "onChange",
+    mode: "onBlur",
     reValidateMode: "onChange",
     criteriaMode: "firstError",
     shouldFocusError: true,
@@ -98,7 +98,7 @@ export default function FoodDeliveryForm() {
           )}
         </div>
 
-        <div className="flex relative flex-col border px-2 py-1 border-gray-400 rounded-md">
+        <div className="flex  relative flex-col border px-2 py-1 border-gray-400 rounded-md">
           <label htmlFor="Email">Email</label>
           <input
             className="outline-0"
@@ -110,6 +110,17 @@ export default function FoodDeliveryForm() {
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Invalid email address",
+              },
+              validate: {
+                notFake: (value) =>
+                  value !== "email@gmail.com" || "this email is blocked",
+                notFromBlackListedDomain: (value) => {
+                  return (
+                    (!value.endsWith("@xyz.com") &&
+                      !value.endsWith("@test.com")) ||
+                    "this domain is not supported"
+                  );
+                },
               },
             })}
             type="text"
