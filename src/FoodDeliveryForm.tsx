@@ -4,6 +4,7 @@ import {
   type SubmitHandler,
 } from "react-hook-form";
 import { useRenderCount } from "./components/useRenderCount";
+import { TextField } from "./controls/TextField";
 
 type FoodDeliveryFormType = {
   orderNo: number;
@@ -52,82 +53,50 @@ export default function FoodDeliveryForm() {
       <RenderCount />
       <br />
       <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
-        <div className="flex flex-col bg-zinc-700/70 border px-2 py-1 border-gray-400 rounded-md">
-          <label htmlFor="orderNo">orderNo</label>
-          <input
-            className="outline-0 "
-            {...register("orderNo", {
-              required: "orderNo  is required",
-            })}
-            type="string"
-            id="orderNo"
-            disabled
-          />
-        </div>
-        <div className="flex relative flex-col  border px-2 py-1 border-gray-400 rounded-md">
-          <label htmlFor="Mobile">Mobile</label>
-          <input
-            className="outline-0"
-            {...register("mobile", {
-              required: { value: true, message: "mobile is required" },
-              minLength: { value: 11, message: "Must be 11 digits" },
-              maxLength: { value: 11, message: "Must be 11 digits gav" },
-            })}
-            type="text"
-            placeholder="Mobile"
-          />
-          {errors?.mobile && (
-            <div className="error">{errors.mobile.message}</div>
-          )}
-        </div>
-        <div className="flex relative flex-col border px-2 py-1 border-gray-400 rounded-md">
-          <label htmlFor="customerName">Customer Name</label>
-          <input
-            className="outline-0"
-            {...register("customerName", {
-              required: {
-                value: true,
-                message: "customer Name is required",
-              },
-            })}
-            type="text"
-            id="customerName"
-          />
-          {errors?.customerName && (
-            <div className="error">{errors.customerName.message}</div>
-          )}
-        </div>
-
-        <div className="flex  relative flex-col border px-2 py-1 border-gray-400 rounded-md">
-          <label htmlFor="Email">Email</label>
-          <input
-            className="outline-0"
-            {...register("email", {
-              required: {
-                value: true,
-                message: "email is required",
-              },
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Invalid email address",
-              },
-              validate: {
-                notFake: (value) =>
-                  value !== "email@gmail.com" || "this email is blocked",
-                notFromBlackListedDomain: (value) => {
-                  return (
-                    (!value.endsWith("@xyz.com") &&
-                      !value.endsWith("@test.com")) ||
-                    "this domain is not supported"
-                  );
-                },
-              },
-            })}
-            type="text"
-            id="Email"
-          />
-          {errors?.email && <div className="error">{errors.email.message}</div>}
-        </div>
+        <TextField
+          disabled
+          type="text"
+          className=""
+          label="#OrderNo"
+          {...register("orderNo", {
+            required: "orderNo  is required",
+          })}
+          error={errors.orderNo}
+        />
+        <TextField
+          type="text"
+          className=""
+          label="Mobile"
+          {...register("mobile", {
+            required: { value: true, message: "mobile is required" },
+          })}
+          error={errors.mobile}
+        />
+        <TextField
+          type="text"
+          className=""
+          label="customer Name"
+          {...register("customerName", {
+            required: "customerName  is required",
+          })}
+          error={errors.customerName}
+        />
+        <TextField
+          type="email"
+          className=""
+          label="Email"
+          {...register("email", {
+            required: {
+              value: true,
+              message: "email is required",
+            },
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email address",
+            },
+          })}
+          error={errors.email}
+        />
       </div>
 
       <div className="mt-8">
