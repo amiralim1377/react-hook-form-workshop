@@ -1,4 +1,8 @@
-import { useForm, type ErrorOption } from "react-hook-form";
+import {
+  useForm,
+  type SubmitErrorHandler,
+  type SubmitHandler,
+} from "react-hook-form";
 
 type FoodDeliveryFormType = {
   mobile: string;
@@ -12,13 +16,13 @@ export default function FoodDeliveryForm() {
     formState: { errors },
   } = useForm<FoodDeliveryFormType>();
 
-  const onSubmit = (formData: any) => {
+  const onSubmit: SubmitHandler<FoodDeliveryFormType> = (formData) => {
     console.log(formData);
   };
 
   // onerror
 
-  const onError = (errors: any) => {
+  const onError: SubmitErrorHandler<FoodDeliveryFormType> = (errors) => {
     console.log(errors);
   };
 
