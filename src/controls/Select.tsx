@@ -14,7 +14,7 @@ const Select = (props: SelectProps) => {
   const { className = "", label, error, options, ...otherProps } = props;
 
   return (
-    <div className="flex mt-8 relative flex-col border px-2 py-1 pb-3 border-gray-400 rounded-md">
+    <div className="flex  relative flex-col border px-2 py-1 pb-3 border-gray-400 rounded-md">
       <label htmlFor={id}>{label}</label>
       <select
         className={`w-full outline-0 px-3 py-2 rounded-md border border-gray-400
