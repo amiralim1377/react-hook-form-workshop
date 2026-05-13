@@ -14,12 +14,12 @@ export default function FoodDeliveryForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FoodDeliveryFormType>();
-
-  console.log(useForm());
-
-  console.log(register("customerName"));
-  const customerControll = register("customerName");
+  } = useForm<FoodDeliveryFormType>({
+    defaultValues: {
+      customerName: "amirali",
+      mobile: "09120919987",
+    },
+  });
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = (formData) => {
     console.log(formData);
@@ -40,13 +40,9 @@ export default function FoodDeliveryForm() {
         <label htmlFor="customerName">customerName</label>
         <input
           className="border px-2 py-1 border-gray-400 rounded-md"
-          name={customerControll.name}
-          ref={customerControll.ref}
-          onChange={customerControll.onChange}
-          onBlur={customerControll.onBlur}
-          // {...register("customerName", {
-          //   required: "customer Name is required",
-          // })}
+          {...register("customerName", {
+            required: "customer Name is required",
+          })}
           id="customerName"
           type="text"
         />
@@ -57,7 +53,7 @@ export default function FoodDeliveryForm() {
           id="mobile"
           className="border px-2 py-1 border-gray-400 rounded-md"
           {...register("mobile", {
-            required: "mobile is required",
+            required: true,
           })}
         />
       </div>
