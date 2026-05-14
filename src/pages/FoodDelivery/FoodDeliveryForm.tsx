@@ -10,6 +10,7 @@ import { CheckoutForm } from "./components/CheckoutForm";
 import type { FoodDeliveryFormType } from "../../types";
 import { DeliveryAddressForm } from "./components/DeliveryAddressForm";
 import { FoodDeliveryMaster } from "./components/FoodDeliveryMaster";
+import { SubmitButton } from "../../controls/SubmitButton";
 
 // eslint-disable-next-line
 const RenderCount = useRenderCount();
@@ -37,9 +38,19 @@ export default function FoodDeliveryForm() {
       shouldFocusError: true,
     });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
-  const onSubmit: SubmitHandler<FoodDeliveryFormType> = (formData) => {
+  // console.log("isValid:", isValid);
+
+  console.log("isSubmitting:", isSubmitting);
+
+  const onSubmit: SubmitHandler<FoodDeliveryFormType> = async (formData) => {
+    await new Promise((resolve, rejects) => {
+      setTimeout(rejects, 6000);
+    });
     console.log(formData);
   };
 
@@ -65,12 +76,7 @@ export default function FoodDeliveryForm() {
         <DeliveryAddressForm />
       </FormProvider>
       <div className="mt-8">
-        <button
-          type="submit"
-          className="px-2 py-1 rounded-md border border-gray-400"
-        >
-          submit
-        </button>
+        <SubmitButton isSubmitting={isSubmitting} value={"submit"} />
       </div>
     </form>
   );
