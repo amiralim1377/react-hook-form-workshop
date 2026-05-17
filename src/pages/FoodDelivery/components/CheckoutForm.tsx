@@ -1,6 +1,7 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import { Select } from "../../../controls/Select";
 import type { CheckoutFormType, SelectOptionType } from "../../../types";
+import { useRenderCount } from "../../../components/useRenderCount";
 
 const paymentOptions: SelectOptionType[] = [
   { value: "", text: "Select" },
@@ -16,14 +17,22 @@ const deliveryInOptions: SelectOptionType[] = [
   { value: 180, text: "3 hours" },
 ];
 
+// eslint-disable-next-line
+const RenderCount = useRenderCount();
+
 const CheckoutForm = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<CheckoutFormType>();
+  const { register } = useFormContext<CheckoutFormType>();
+
+  const { errors } = useFormState<CheckoutFormType>({
+    name: ["deliveryIn", "paymentMethod"],
+    exact: true,
+  });
+
   return (
     <>
-      <h1 className="font-bold mt-4 capitalize">checkout Details</h1>
+      <h1 className="font-bold my-4 capitalize">checkout Details</h1>
+      <RenderCount />
+      <br />
       <div className="grid grid-cols-2  gap-y-2 gap-x-4 items-center">
         <Select
           {...register("paymentMethod", {

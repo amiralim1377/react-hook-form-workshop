@@ -1,15 +1,24 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import { TextField } from "../../../controls/TextField";
 import type { DeliveryAddressFormType } from "../../../types";
+import { useRenderCount } from "../../../components/useRenderCount";
+
+// eslint-disable-next-line
+const RenderCount = useRenderCount();
 
 const DeliveryAddressForm = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<{ address: DeliveryAddressFormType }>();
+  const { register } = useFormContext<{ address: DeliveryAddressFormType }>();
+
+  const { errors } = useFormState<{ address: DeliveryAddressFormType }>({
+    name: ["address"],
+    exact: true,
+  });
+
   return (
     <>
-      <h1 className="font-bold mt-8  capitalize">delivery address</h1>
+      <h1 className="font-bold my-8  capitalize">delivery address</h1>
+      <RenderCount />
+      <br />
       <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
         <TextField
           type="text"
