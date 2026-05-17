@@ -38,14 +38,7 @@ export default function FoodDeliveryForm() {
       shouldFocusError: true,
     });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
-
-  // console.log("isValid:", isValid);
-
-  console.log("isSubmitting:", isSubmitting);
+  const { handleSubmit, control } = methods;
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = async (formData) => {
     await new Promise((resolve, rejects) => {
@@ -70,13 +63,12 @@ export default function FoodDeliveryForm() {
       <br />
       <FormProvider {...methods}>
         <FoodDeliveryMaster />
-        <div className="mt-8">list of ordered food items</div>
-
+        {/* <div className="mt-8">list of ordered food items</div> */}
         <CheckoutForm />
         <DeliveryAddressForm />
       </FormProvider>
       <div className="mt-8">
-        <SubmitButton isSubmitting={isSubmitting} value={"submit"} />
+        <SubmitButton control={control} value={"submit"} />
       </div>
     </form>
   );
