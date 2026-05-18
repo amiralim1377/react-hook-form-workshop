@@ -34,8 +34,6 @@ export default function FoodDeliveryForm() {
       },
       mode: "onChange",
       reValidateMode: "onChange",
-      criteriaMode: "firstError",
-      shouldFocusError: true,
     });
 
   const { handleSubmit, control } = methods;
