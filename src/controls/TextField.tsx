@@ -4,7 +4,7 @@ import type { FieldError } from "react-hook-form";
 type TextFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   type: string;
   className: string;
-  label: string;
+  label?: string;
   error?: FieldError | undefined;
 };
 
@@ -14,7 +14,7 @@ const TextField = (props: TextFieldProps) => {
 
   return (
     <div className="flex relative flex-col border px-2 py-1 border-gray-400 rounded-md">
-      <label htmlFor={id}>{label}</label>
+      {label && <label htmlFor={id}>{label}</label>}
       <input
         className={`outline-0 ${className}`}
         type={type}
