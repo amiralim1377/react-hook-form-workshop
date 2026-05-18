@@ -1,14 +1,10 @@
 import type React from "react";
-import { useRenderCount } from "../components/useRenderCount";
 import { useFormState, type Control } from "react-hook-form";
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   // eslint-disable-next-line
   control?: Control<any, any>;
 };
-
-// eslint-disable-next-line
-const RenderCount = useRenderCount();
 
 const SubmitButton = (props: SubmitButtonProps) => {
   const { className, value, control = undefined, ...other } = props;
@@ -19,7 +15,6 @@ const SubmitButton = (props: SubmitButtonProps) => {
 
   return (
     <>
-      <RenderCount />
       <button
         type="submit"
         className={`px-2 py-1 w-18 flex items-center justify-center text-center rounded-md border border-gray-400 ${className}`}
