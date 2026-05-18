@@ -1,7 +1,8 @@
-import { useFormContext, useFormState } from "react-hook-form";
+import { useFormContext, useFormState, useWatch } from "react-hook-form";
 import { Select } from "../../../controls/Select";
 import type { CheckoutFormType, SelectOptionType } from "../../../types";
 import { useRenderCount } from "../../../components/useRenderCount";
+import { useEffect } from "react";
 
 const paymentOptions: SelectOptionType[] = [
   { value: "", text: "Select" },
@@ -28,10 +29,17 @@ const CheckoutForm = () => {
     exact: true,
   });
 
+  const paymentMethod = useWatch<CheckoutFormType>({ name: "paymentMethod" });
+  console.log(paymentMethod);
+
+  useEffect(() => {
+    if (paymentMethod === "online") alert("paymentMethod is online");
+  }, [paymentMethod]);
+
   return (
     <>
       <h1 className="font-bold my-4 capitalize">checkout Details</h1>
-      {/* <RenderCount /> */}
+      <RenderCount />
       <br />
       <div className="grid grid-cols-2  gap-y-2 gap-x-4 items-center">
         <Select
