@@ -7,17 +7,26 @@ import { useRenderCount } from "../../../components/useRenderCount";
 const RenderCount = useRenderCount();
 
 const DeliveryAddressForm = () => {
-  const { register } = useFormContext<{ address: DeliveryAddressFormType }>();
+  const { register } = useFormContext<{
+    address: DeliveryAddressFormType;
+  }>();
 
-  const { errors } = useFormState<{ address: DeliveryAddressFormType }>({
-    name: ["address"],
+  const { errors } = useFormState<{
+    address: DeliveryAddressFormType;
+  }>({
+    name: [
+      "address.city",
+      "address.landmark",
+      "address.state",
+      "address.streetAddress",
+    ],
     exact: true,
   });
 
   return (
     <>
       <h1 className="font-bold my-8  capitalize">delivery address</h1>
-      <RenderCount />
+      {/* <RenderCount /> */}
       <br />
       <div className="grid grid-cols-2 grid-rows-2 gap-8 items-center">
         <TextField
