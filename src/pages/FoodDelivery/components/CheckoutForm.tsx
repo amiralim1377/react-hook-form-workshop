@@ -30,7 +30,6 @@ const CheckoutForm = () => {
   });
 
   const paymentMethod = useWatch<CheckoutFormType>({ name: "paymentMethod" });
-  console.log(paymentMethod);
 
   useEffect(() => {
     if (paymentMethod === "online") alert("paymentMethod is online");
