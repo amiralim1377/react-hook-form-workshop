@@ -36,7 +36,7 @@ export default function FoodDeliveryForm() {
       reValidateMode: "onChange",
     });
 
-  const { handleSubmit, control, getValues, setValue, getFieldState } = methods;
+  const { handleSubmit, control } = methods;
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = async (formData) => {
     await new Promise((resolve, rejects) => {
@@ -47,14 +47,9 @@ export default function FoodDeliveryForm() {
 
   // onerror-function
   const onError: SubmitErrorHandler<FoodDeliveryFormType> = (errors) => {
-    // console.log(errors);
-    console.log("getValues:", getValues(["address", "mobile"]));
+    console.log(errors);
   };
 
-  const onDemo = () => {
-    console.log(setValue("paymentMethod", "cod", { shouldTouch: true }));
-    console.log(getFieldState("paymentMethod"));
-  };
   return (
     <form
       autoComplete="off"
@@ -73,9 +68,6 @@ export default function FoodDeliveryForm() {
       <div className="mt-8">
         <SubmitButton control={control} value={"submit"} />
       </div>
-      <button type="button" className="bg-red-500 p-4 mt-4" onClick={onDemo}>
-        demo
-      </button>
     </form>
   );
 }
