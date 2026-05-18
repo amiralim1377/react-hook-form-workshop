@@ -31,7 +31,7 @@ const CheckoutForm = () => {
   return (
     <>
       <h1 className="font-bold my-4 capitalize">checkout Details</h1>
-      <RenderCount />
+      {/* <RenderCount /> */}
       <br />
       <div className="grid grid-cols-2  gap-y-2 gap-x-4 items-center">
         <Select
