@@ -9,8 +9,9 @@ import { useRenderCount } from "../../components/useRenderCount";
 import { CheckoutForm } from "./components/CheckoutForm";
 import type { FoodDeliveryFormType } from "../../types";
 import { DeliveryAddressForm } from "./components/DeliveryAddressForm";
-import { FoodDeliveryMaster } from "./components/FoodDeliveryMaster";
 import { SubmitButton } from "../../controls/SubmitButton";
+import { OrderFoodItems } from "./components/OrderFoodItems";
+import { MasterFoodDeliveryForm } from "./components/MasterFoodDeliveryForm";
 
 // eslint-disable-next-line
 const RenderCount = useRenderCount();
@@ -24,6 +25,7 @@ export default function FoodDeliveryForm() {
         email: "",
         orderNo: new Date().valueOf(),
         deliveryIn: 0,
+        foodItems: [{ name: "", quantity: 0 }],
         paymentMethod: "",
         address: {
           streetAddress: "",
@@ -60,8 +62,8 @@ export default function FoodDeliveryForm() {
       <RenderCount />
       <br />
       <FormProvider {...methods}>
-        <FoodDeliveryMaster />
-        {/* <div className="mt-8">list of ordered food items</div> */}
+        <MasterFoodDeliveryForm />
+        <OrderFoodItems />
         <CheckoutForm />
         <DeliveryAddressForm />
       </FormProvider>
