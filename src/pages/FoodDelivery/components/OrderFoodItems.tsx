@@ -31,7 +31,7 @@ const OrderFoodItems = () => {
     <>
       <div className="mt-8">
         <h1 className="font-bold my-4 capitalize">Food Items</h1>
-        <RenderCount />
+        {/* <RenderCount /> */}
         <div className="overflow-x-auto  rounded-xl border border-gray-700 bg-[#2b3130] shadow-lg">
           <table className="w-full   text-sm text-gray-200">
             <thead className="bg-[#303635] border-b border-gray-700">
