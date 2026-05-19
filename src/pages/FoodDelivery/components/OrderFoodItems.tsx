@@ -15,6 +15,9 @@ const OrderFoodItems = () => {
     foodItems: OrderFoodItemType[];
   }>({
     name: "foodItems",
+    rules: {
+      minLength: { value: 1, message: "At least 1 food Items required" },
+    },
   });
   const onRowAdd = () => {
     append({ name: "food", quantity: 1 });
@@ -88,6 +91,17 @@ const OrderFoodItems = () => {
                 </tr>
               ))}
             </tbody>
+            {errors.foodItems?.root && (
+              <tfoot>
+                <tr>
+                  <td className="error">{errors.foodItems?.root?.message}</td>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Corporis excepturi eius, ratione eligendi ipsam saepe quis
+                  libero cum minus quas dolor eveniet voluptates aliquid
+                  deleniti officiis reprehenderit iste adipisci harum!
+                </tr>
+              </tfoot>
+            )}
           </table>
         </div>
       </div>
