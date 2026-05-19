@@ -25,7 +25,7 @@ export default function FoodDeliveryForm() {
         email: "",
         orderNo: new Date().valueOf(),
         deliveryIn: 0,
-        foodItems: [{ name: "", quantity: 0 }],
+        foodItems: [{ foodId: 0, price: 0, totalPrice: 0, quantity: 0 }],
         paymentMethod: "",
         address: {
           streetAddress: "",
@@ -41,8 +41,8 @@ export default function FoodDeliveryForm() {
   const { handleSubmit, control } = methods;
 
   const onSubmit: SubmitHandler<FoodDeliveryFormType> = async (formData) => {
-    await new Promise((resolve, rejects) => {
-      setTimeout(rejects, 6000);
+    await new Promise((resolve) => {
+      setTimeout(resolve, 3000);
     });
     console.log(formData);
   };
