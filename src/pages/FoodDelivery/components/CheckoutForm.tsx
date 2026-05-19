@@ -46,7 +46,6 @@ const CheckoutForm = () => {
         <Select
           {...register("deliveryIn")}
           label="Delivery within"
-          error={errors.deliveryIn}
           options={deliveryInOptions}
         />
       </div>
